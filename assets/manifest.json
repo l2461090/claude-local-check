@@ -1,12 +1,12 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": {
-    "app.js": "111c86f2aab5a529db059b8cbe1df42d3e5f10016cd05d5e9f8731a3f2b9f063",
+    "app.js": "ad65bdc2c7df4fec3893d71cba798a53f27e2f4c5164916a20b89bb8b4e02634",
     "checks.js": "54d3dae524344e990cbf21466d7304a9c8b85a6bdce35f6af60137df193d2090",
     "icon.svg": "e95e51e64ecc703bab8665de7cd757a3e3335043cfeaaed74e55c82c035c8c9e",
-    "index.html": "9e716a0cd699bffbb1daa3e53c8c222db4ba9793add222ef92fe043387d030db",
-    "model.js": "b921880cd3e34c91a08a93e97076181eabf7d7170623db9e388da8b041a416c0",
-    "style.css": "90afebc03f5e07c3ba284bb4784c5616b62db9ecea31d870a0a763d64f216285",
-    "zh/index.html": "9e716a0cd699bffbb1daa3e53c8c222db4ba9793add222ef92fe043387d030db"
+    "index.html": "45965b4487cc53526094b69446664a35b7957a8e8f480cbb7bc1f8dbbe9aab9d",
+    "model.js": "9dfc15110d4a5ed6bc3724b651f281d120fcf3809ece069f31c3b9e6a91ea477",
+    "style.css": "a2715e718c73eea5b31eb201672359fa5bab96aeb6cd2f50ddd23a5970600029",
+    "zh/index.html": "45965b4487cc53526094b69446664a35b7957a8e8f480cbb7bc1f8dbbe9aab9d"
   }
 }

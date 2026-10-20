@@ -1,5 +1,5 @@
 // Copyright (c) 2026 l2461090. MIT License.
-import {checks, assess} from "./model.js";
+import {checks, assess, matchedSignals} from "./model.js";
 import {inspect} from "./checks.js";
 
 const lang = location.pathname.startsWith("/zh") ? "zh" : "en";
@@ -13,6 +13,7 @@ const words = {
   start:["开始检测","Start scan"],save:["保存结果图片","Save result image"],
   local:["结果留在当前浏览器","Results stay in this browser"],
   checks:["检测明细","Check details"],count:["10 项信号 · 总权重 100","10 signals · 100 total weight"],
+  matched:["命中的信号","Matched signals"],
   privacy:["本地检测说明","About this local scan"],
   privacyDetail:["默认检测无需联网，结果不上传。检测反映当前浏览器可见的信息；未发现某个标识，不等于能够确定设备或用户所在地。","Default checks work offline without uploading results. They reflect what this browser exposes; a missing identifier does not establish a device or user's location."],
   webrtc:["启用 WebRTC 网络检测（会连接 Google 公共 STUN 服务器）","Enable WebRTC network check (contacts Google's public STUN server)"],
@@ -55,10 +56,33 @@ for (const [index, check] of checks.entries()) {
 let completed = null;
 let busy = false;
 
+function renderMatches(results, missing) {
+  const hits = matchedSignals(results);
+  $("matched-list").replaceChildren();
+  for (const hit of hits) {
+    const item = document.createElement("li");
+    item.className = "signal-chip";
+    item.dataset.level = hit.points / hit.weight >= 0.75 ? "strong" : "partial";
+    item.title = hit.value;
+    const name = document.createElement("span"); name.textContent = hit[lang];
+    const points = document.createElement("strong"); points.textContent = `+${hit.points}`;
+    item.append(name, points);
+    $("matched-list").append(item);
+  }
+  $("matched-empty").hidden = hits.length > 0;
+  $("matched-empty").textContent = missing === 100
+    ? (zh ? "尚无有效检测结果，无法列出命中信号。" : "No usable results to list matched signals.")
+    : (zh ? `已测项目没有命中加分信号${missing ? "；仍有项目未检测" : ""}。`
+          : `No measured checks added points${missing ? "; some checks remain untested" : ""}.`);
+  $("matched").hidden = false;
+}
+
 async function scan() {
   if (busy) return;
   busy = true;
   completed = null;
+  $("matched").hidden = true;
+  $("matched-list").replaceChildren();
   $("retest").disabled = true;
   $("allow-webrtc").disabled = true;
   $("save").hidden = true;
@@ -92,6 +116,7 @@ async function scan() {
     }
     const result = assess(results,lang);
     completed = {result,results};
+    renderMatches(results,result.missing);
     $("summary-title").textContent = result.title;
     $("summary-detail").textContent = result.detail;
     $("score").textContent = result.missing === 100 ? "—" : String(result.score);
@@ -117,11 +142,24 @@ async function scan() {
 function exportImage() {
   if (!completed) return;
   const canvas = document.createElement("canvas");
-  canvas.width = 1080; canvas.height = 1450;
+  canvas.width = 1080;
   const c = canvas.getContext("2d");
   if (!c) return;
   const {result,results} = completed;
-  c.fillStyle = "#f7f7f2"; c.fillRect(0,0,1080,1450);
+  const hits = matchedSignals(results);
+  c.font = "20px sans-serif";
+  let chipX = 70, chipRow = 0;
+  const chips = hits.map(hit => {
+    const label = `${hit[lang]}  +${hit.points}`;
+    const width = c.measureText(label).width + 32;
+    if (chipX + width > 1010) {chipX = 70; chipRow++;}
+    const chip = {label, width, x:chipX, row:chipRow, strong:hit.points/hit.weight >= 0.75};
+    chipX += width + 12;
+    return chip;
+  });
+  const matchedHeight = hits.length ? 85 + (chipRow + 1)*54 : 110;
+  canvas.height = 1450 + matchedHeight;
+  c.fillStyle = "#f7f7f2"; c.fillRect(0,0,1080,canvas.height);
   c.fillStyle = "#282a27"; c.font = "bold 34px sans-serif";
   c.fillText(document.title,70,85);
   c.fillStyle = "#74766d"; c.font = "20px sans-serif";
@@ -146,8 +184,22 @@ function exportImage() {
   c.font = "22px sans-serif"; c.fillStyle = "#74766d";
   lines(result.detail,850).forEach((line,i) => c.fillText(line,540,510+i*32));
   c.textAlign = "left";
+  c.fillStyle = "#74766d"; c.font = "22px sans-serif";
+  c.fillText(text("matched"),70,720);
+  c.font = "20px sans-serif";
+  if (!hits.length) {
+    c.fillText(zh ? "已测项目未发现加分信号；未检测项目见说明。" : "No measured checks added points. See untested checks below.",70,765);
+  }
+  for (const chip of chips) {
+    const y = 742 + chip.row*54;
+    c.fillStyle = chip.strong ? "#f9ece8" : "#f6f0e3";
+    c.beginPath();c.roundRect(chip.x,y,chip.width,42,21);c.fill();
+    c.strokeStyle = chip.strong ? "#dc9e8e" : "#d9bd83";c.stroke();
+    c.fillStyle = chip.strong ? "#a94e39" : "#8e671f";
+    c.fillText(chip.label,chip.x+16,y+28);
+  }
   for (const [i,check] of checks.entries()) {
-    const y = 735 + i*53;
+    const y = 735 + matchedHeight + i*53;
     c.fillStyle = "#282a27"; c.font = "23px sans-serif";c.fillText(check[lang],70,y);
     c.fillStyle = "#74766d"; c.font = "17px sans-serif";
     const value = results[check.id].value;
@@ -159,7 +211,7 @@ function exportImage() {
     c.textAlign = "left";
   }
   c.font = "19px sans-serif";
-  lines(text("disclaimer"),930).forEach((line,i) => c.fillText(line,70,1320+i*28));
+  lines(text("disclaimer"),930).forEach((line,i) => c.fillText(line,70,1320+matchedHeight+i*28));
   canvas.toBlob(blob => {
     if (!blob) return;
     const url = URL.createObjectURL(blob);

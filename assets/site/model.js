@@ -17,6 +17,15 @@ export function band(score) {
   return score <= 30 ? "low" : score <= 60 ? "medium" : "high";
 }
 
+export function matchedSignals(results) {
+  return checks.flatMap(check => {
+    const strength = results[check.id]?.strength;
+    if (typeof strength !== "number" || !Number.isFinite(strength)) return [];
+    const points = Math.round(Math.max(0, Math.min(1, strength)) * check.weight);
+    return points > 0 ? [{...check, points, value:results[check.id].value || ""}] : [];
+  }).sort((a,b) => b.points - a.points);
+}
+
 export function assess(results, lang="zh") {
   let score = 0, missing = 0;
   for (const check of checks) {

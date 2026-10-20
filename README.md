@@ -4,7 +4,7 @@
 
 ## 如何使用
 
-1. 从 [Releases](https://github.com/l2461090/claude-local-check/releases/latest) 下载 `claude-local-check-v1.0.0.zip`。
+1. 从 [Releases](https://github.com/l2461090/claude-local-check/releases/latest) 下载 `claude-local-check-v1.0.1.zip`。
 2. 解压完整文件夹。需要 **Python 3.8+** 和现代桌面浏览器，无需 API Key、账号、Node.js 或第三方 Python 包。
 3. 按系统运行启动文件：
 
@@ -47,6 +47,8 @@ Windows 可用 `py -3 scripts/local_check.py start --open`。若缺少 Python，
 | 0–30 | 低风险 | 🐶你不是「Claude 中国用户」🐶 |
 | 31–60 | 中等风险 | 🐶你可能是「Claude 中国用户」🐶 |
 | 61–100 | 高风险 | 🐶你绝对是「Claude 中国用户」🐶 |
+
+检测完成后，结果卡先汇总“命中的信号”，按加分由高到低展示每项名称和分值；保存的结果图片也包含同样的汇总。没有加分的项目与未检测项目不会混入命中标签。
 
 未检测项会标记，并列出可能的完整分数范围。当前结论按已测分数给出；全部项目无法检测时显示“未获取到有效检测结果”。
 

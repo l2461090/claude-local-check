@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {checks,assess,verdict,localeStrength} from "../assets/site/model.js";
+import {checks,assess,verdict,localeStrength,matchedSignals} from "../assets/site/model.js";
 
 test("weights and three-band boundaries",() => {
   assert.equal(checks.reduce((sum,c)=>sum+c.weight,0),100);
@@ -32,4 +32,19 @@ test("language matching is scoped to locale tags",() => {
   assert.equal(localeStrength("zh-TW"),0.4);
   assert.equal(localeStrength("en-US"),0);
   assert.equal(localeStrength("not-zh-CN"),0);
+});
+test("matched signals show every positive contribution, ordered by points",() => {
+  const results = {
+    fonts:{strength:1,value:"Example font"},
+    offset:{strength:1},
+    platform:{strength:0.25},
+    language:{strength:0},
+    webrtc:{strength:null},
+    browser:{strength:NaN},
+  };
+  const hits = matchedSignals(results);
+  assert.deepEqual(hits.map(h=>[h.id,h.points]),[["fonts",14],["offset",3],["platform",1]]);
+  assert.equal(hits.reduce((sum,h)=>sum+h.points,0),assess(results).score);
+  assert.equal(hits[0].value,"Example font");
+  assert.deepEqual(matchedSignals({}),[]);
 });
