@@ -1,12 +1,13 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": {
-    "app.js": "ad65bdc2c7df4fec3893d71cba798a53f27e2f4c5164916a20b89bb8b4e02634",
-    "checks.js": "54d3dae524344e990cbf21466d7304a9c8b85a6bdce35f6af60137df193d2090",
+    "app.js": "cc24c2175b766971a3e0737d5fd8809d0fe40b879e30b79336c786d0d9f72abb",
+    "checks.js": "eba705f9f3ae122c405425e496886fc1fca1b84dbd1fa7ec6a63000aaba6fbaf",
     "icon.svg": "e95e51e64ecc703bab8665de7cd757a3e3335043cfeaaed74e55c82c035c8c9e",
-    "index.html": "45965b4487cc53526094b69446664a35b7957a8e8f480cbb7bc1f8dbbe9aab9d",
-    "model.js": "9dfc15110d4a5ed6bc3724b651f281d120fcf3809ece069f31c3b9e6a91ea477",
-    "style.css": "a2715e718c73eea5b31eb201672359fa5bab96aeb6cd2f50ddd23a5970600029",
-    "zh/index.html": "45965b4487cc53526094b69446664a35b7957a8e8f480cbb7bc1f8dbbe9aab9d"
+    "index.html": "429f93f0c87e6d7526279aa4b3bf01b831d554d37d31f4d0d72999e46b1717f8",
+    "model.js": "fc09d08d1fea469a0295b82fc061188a68f929158e90550ee95b25efee126b92",
+    "rules.js": "376f21c8abf5c6e596189b835eb91b97e51ad0c7396174eb52d7d6fd33062fbb",
+    "style.css": "6912fe18399d29a5fbf55d14bcadcf42cb8af20dfbefbc82532b45799f024d00",
+    "zh/index.html": "429f93f0c87e6d7526279aa4b3bf01b831d554d37d31f4d0d72999e46b1717f8"
   }
 }

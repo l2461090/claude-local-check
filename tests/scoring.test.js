@@ -1,6 +1,7 @@
+import {languageScore,regionScore} from "../assets/site/rules.js";
 import test from "node:test";
 import assert from "node:assert/strict";
-import {checks,assess,verdict,localeStrength,matchedSignals} from "../assets/site/model.js";
+import {checks,assess,verdict,matchedSignals} from "../assets/site/model.js";
 
 test("weights and three-band boundaries",() => {
   assert.equal(checks.reduce((sum,c)=>sum+c.weight,0),100);
@@ -26,14 +27,16 @@ test("known measurements contribute their weights and invalid values are unteste
   assert.equal(assess(results).score,76);
   assert.equal(assess(results).missing,24);
 });
-test("language matching is scoped to locale tags",() => {
-  assert.equal(localeStrength("zh_CN"),1);
-  assert.equal(localeStrength("zh-Hans-CN"),1);
-  assert.equal(localeStrength("zh-TW"),0.4);
-  assert.equal(localeStrength("en-US"),0);
-  assert.equal(localeStrength("not-zh-CN"),0);
+test("Traditional-Chinese fallback tags do not add mainland-language points",() => {
+  for (const [languages,expected] of [
+    [["zh-TW","zh","en-US"],0],[["zh-Hant-TW","zh"],0],[["zh-HK","zh"],0.5],
+    [["en-US","zh-CN"],0.7],[["zh","zh-TW"],1],[["zh-CN"],1],[["en-US"],0],
+  ]) assert.equal(languageScore(languages),expected);
+  assert.equal(regionScore("zh-TW"),0);
+  assert.equal(regionScore("zh-HK"),0.5);
+  assert.equal(regionScore("zh-Hans"),1);
 });
-test("matched signals show every positive contribution, ordered by points",() => {
+test("matched signals apply the strength threshold in detection order",() => {
   const results = {
     fonts:{strength:1,value:"Example font"},
     offset:{strength:1},
@@ -47,4 +50,12 @@ test("matched signals show every positive contribution, ordered by points",() =>
   assert.equal(hits.reduce((sum,h)=>sum+h.points,0),assess(results).score);
   assert.equal(hits[0].value,"Example font");
   assert.deepEqual(matchedSignals({}),[]);
+});
+
+test("small contributions count toward total without becoming matched signals",()=>{
+ const results={fonts:{strength:0.2,value:"TC fonts"}};
+ assert.equal(assess(results).score,3);
+ assert.deepEqual(matchedSignals(results),[]);
+ const hits=matchedSignals({language:{strength:0.7},fonts:{strength:1}});
+ assert.deepEqual(hits.map(h=>h.id),["language","fonts"]);
 });

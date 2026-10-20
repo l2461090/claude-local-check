@@ -1,9 +1,9 @@
 {
   "name": "claude-local-check",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/scoring.test.js"
+    "test": "node --test tests/*.test.js"
   }
 }

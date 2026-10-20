@@ -1,0 +1,697 @@
+[
+  {
+    "input": {},
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "languages": [
+        "zh-CN"
+      ],
+      "locale": "zh-CN",
+      "zone": "Asia/Shanghai"
+    },
+    "scores": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "languages": [],
+      "language": "en-US"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "languages": [
+        "en-US",
+        "zh-CN"
+      ],
+      "locale": "zh-HK"
+    },
+    "scores": [
+      0,
+      0.7,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.5,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "languages": [
+        "zh-Hant-TW",
+        "zh",
+        "en"
+      ],
+      "locale": "zh-Hant-TW"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.5,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "zone": "Asia/Macau",
+      "locale": "zh-MO",
+      "offset": -330
+    },
+    "scores": [
+      0.6,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.5,
+      0,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "SimSun"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0.83,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "SimSun",
+        "KaiTi"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0.91,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "SimSun",
+        "KaiTi",
+        "STSong"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0.99,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "SimSun",
+        "KaiTi",
+        "STSong",
+        "STHeiti"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "PingFang TC"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0.2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "MiSans"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0.8,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "MiSans",
+        "OPPO Sans"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "Microsoft YaHei",
+        "Microsoft YaHei UI",
+        "SimSun",
+        "NSimSun",
+        "SimHei",
+        "KaiTi",
+        "FangSong",
+        "DengXian",
+        "PingFang SC",
+        "Hiragino Sans GB",
+        "STHeiti",
+        "STSong",
+        "Songti SC",
+        "Source Han Sans CN",
+        "Source Han Sans SC",
+        "Noto Sans CJK SC",
+        "Noto Serif CJK SC",
+        "WenQuanYi Micro Hei",
+        "WenQuanYi Zen Hei",
+        "Microsoft JhengHei",
+        "PMingLiU",
+        "MingLiU",
+        "DFKai-SB",
+        "PingFang TC",
+        "PingFang HK",
+        "Source Han Sans TW",
+        "Noto Sans CJK TC",
+        "MiSans",
+        "MIUI",
+        "HarmonyOS Sans SC",
+        "HarmonyOS Sans",
+        "HONOR Sans",
+        "OPPO Sans",
+        "vivo Sans",
+        "Alibaba PuHuiTi",
+        "Alibaba Sans",
+        "DingTalk JinBuTi",
+        "Douyin Sans",
+        "HYQiHei",
+        "FZShuSong-Z01S",
+        "FZKai-Z03S",
+        "FZHei-B01S",
+        "FZFangSong-Z02S"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "SimSun"
+      ],
+      "widthDelta": 0.5
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "fonts": [
+        "SimSun"
+      ],
+      "widthDelta": 0.51
+    },
+    "scores": [
+      0,
+      0,
+      0.83,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "noCanvas": true
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "intlFails": true
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "brands": [
+        "QQBrowser"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "model": "RMX1234"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.6,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "model": "m2101abc"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.6,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "hintPlatform": "HarmonyOS"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "hintsFail": true,
+      "ua": "Android Xiaomi"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.6,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "noHints": true,
+      "ua": "Huawei"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.8,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "ua": "Windows",
+      "platform": "Win32"
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.4
+    ]
+  },
+  {
+    "input": {
+      "ua": "CrOS",
+      "platform": ""
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.35
+    ]
+  },
+  {
+    "input": {
+      "ua": "",
+      "platform": ""
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.4
+    ]
+  },
+  {
+    "input": {
+      "rtcMissing": true
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "rtcThrows": true
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "offerFails": true
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "timeout": true
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "candidates": [
+        "candidate:1 1 udp 1 192.168.1.2 4500 typ host"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0.5,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "candidates": [
+        "candidate:1 1 udp 1 2001:0db8:0000:0000:0000:0000:0000:0001 4500 typ host"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0.5,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "candidates": [
+        "candidate:1 1 udp 1 2001:db8::1 4500 typ host"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  },
+  {
+    "input": {
+      "candidates": [
+        "candidate:1 1 udp 1 example.local 4500 typ host"
+      ]
+    },
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.7,
+      0.25
+    ]
+  }
+]

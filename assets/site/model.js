@@ -3,14 +3,14 @@
 export const checks = [
   {id:"timezone", weight:24, zh:"系统时区", en:"System timezone"},
   {id:"language", weight:18, zh:"浏览器语言", en:"Browser languages"},
-  {id:"fonts", weight:14, zh:"中文字体", en:"Chinese fonts"},
-  {id:"vendorFonts", weight:10, zh:"厂商字体", en:"Vendor fonts"},
-  {id:"webrtc", weight:10, zh:"WebRTC 地址暴露", en:"WebRTC address exposure"},
+  {id:"fonts", weight:14, zh:"已安装中文字体", en:"Chinese fonts"},
+  {id:"vendorFonts", weight:10, zh:"国产厂商字体", en:"Vendor fonts"},
+  {id:"webrtc", weight:10, zh:"WebRTC IP 泄露", en:"WebRTC IP exposure"},
   {id:"browser", weight:8, zh:"浏览器标识", en:"Browser identifier"},
   {id:"device", weight:6, zh:"设备标识", en:"Device identifier"},
   {id:"locale", weight:4, zh:"区域格式", en:"Formatting locale"},
   {id:"offset", weight:3, zh:"时区偏移", en:"UTC offset"},
-  {id:"platform", weight:3, zh:"操作系统标识", en:"Operating system"},
+  {id:"platform", weight:3, zh:"Emoji 渲染风格", en:"Emoji rendering style"},
 ];
 
 export function band(score) {
@@ -22,8 +22,8 @@ export function matchedSignals(results) {
     const strength = results[check.id]?.strength;
     if (typeof strength !== "number" || !Number.isFinite(strength)) return [];
     const points = Math.round(Math.max(0, Math.min(1, strength)) * check.weight);
-    return points > 0 ? [{...check, points, value:results[check.id].value || ""}] : [];
-  }).sort((a,b) => b.points - a.points);
+    return strength >= 0.25 ? [{...check, points, strength, value:results[check.id].value || ""}] : [];
+  });
 }
 
 export function assess(results, lang="zh") {
@@ -36,7 +36,10 @@ export function assess(results, lang="zh") {
       score += Math.round(Math.max(0, Math.min(1, value)) * check.weight);
     }
   }
-  return verdict(score, missing, lang);
+  const summary = verdict(Math.min(100,score), missing, lang);
+  const failures = checks.filter(check=>results[check.id]?.failed).length;
+  if (failures) summary.detail += lang === "zh" ? ` ${failures} 项未能正常检测，已按兼容规则计 0 分。` : ` ${failures} checks could not complete and received compatibility score 0.`;
+  return summary;
 }
 
 export function verdict(score, missing=0, lang="zh") {
@@ -58,13 +61,6 @@ export function verdict(score, missing=0, lang="zh") {
       : missing
         ? (zh ? `已测 ${score} 分，未检测项目占 ${missing} 分；完整分数可能为 ${score}–${upper}。结论按已测分数显示${band(upper)!==tier ? "，完整评级可能改变" : ""}。`
               : `Measured ${score}; untested weight ${missing}; possible total ${score}–${upper}. The verdict uses measured checks${band(upper)!==tier ? "; the full rating may change" : ""}.`)
-        : (zh ? `全部项目已检测，评分 ${score}/100。` : `All checks completed. Score ${score}/100.`)
+        : (zh ? `检测结束，评分 ${score}/100。` : `Scan finished. Score ${score}/100.`)
   };
-}
-
-export function localeStrength(value) {
-  const tag = String(value || "").toLowerCase().replaceAll("_","-");
-  if (/^zh-(cn|hans)(-|$)/.test(tag)) return 1;
-  if (/^zh($|-)/.test(tag)) return 0.4;
-  return 0;
 }

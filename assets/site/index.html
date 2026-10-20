@@ -39,6 +39,7 @@
       <section id="matched" class="matched" aria-labelledby="matched-title" hidden>
         <h3 id="matched-title" data-text="matched">命中的信号</h3>
         <ul id="matched-list"></ul>
+        <p class="match-rule" data-text="matchRule">匹配程度达到 25% 的信号列在这里；全部计分见下方明细。</p>
         <p id="matched-empty" hidden></p>
       </section>
     </section>
@@ -48,9 +49,9 @@
     </section>
     <section class="privacy">
       <h2 data-text="privacy">本地检测说明</h2>
-      <p data-text="privacyDetail">默认检测无需联网，结果不上传。检测反映当前浏览器可见的信息；未发现某个标识，不等于能够确定设备或用户所在地。</p>
-      <label><input id="allow-webrtc" type="checkbox"><span data-text="webrtc">启用 WebRTC 网络检测（会连接 Google 公共 STUN 服务器）</span></label>
-      <p data-text="partial">未检测项目单独注明，结论按已测分数给出。WebRTC 仅检查地址是否暴露，不判断 IP 属于哪个国家。</p>
+      <p data-text="privacyDetail">结果不上传。WebRTC 默认参与检测，点击开始检测后会连接 Google 公共 STUN。其他项目在当前浏览器中完成。</p>
+      <label><input id="allow-webrtc" type="checkbox" checked><span data-text="webrtc">WebRTC 网络检测（默认开启；会连接 Google 公共 STUN 服务器）</span></label>
+      <p data-text="partial">WebRTC 观察 1 秒，发现候选 IP 加 5 分；未发现按 0 分计算，不表示没有泄露。手动关闭后仅显示部分分数。此项不判断 IP 所属国家。</p>
       <details><summary data-text="rules">查看评级规则</summary><p data-text="ruleDetail">0–30 分：低风险；31–60 分：中等风险；61–100 分：高风险。分数不是封号概率。语言、字体及 UTC+8 等特征也可能出现在其他地区。</p></details>
     </section>
   </main>

@@ -14,10 +14,11 @@ const words = {
   local:["结果留在当前浏览器","Results stay in this browser"],
   checks:["检测明细","Check details"],count:["10 项信号 · 总权重 100","10 signals · 100 total weight"],
   matched:["命中的信号","Matched signals"],
+  matchRule:["匹配程度达到 25% 的信号列在这里；全部计分见下方明细。","Signals with strength ≥25% appear here; all contributions are listed below."],
   privacy:["本地检测说明","About this local scan"],
-  privacyDetail:["默认检测无需联网，结果不上传。检测反映当前浏览器可见的信息；未发现某个标识，不等于能够确定设备或用户所在地。","Default checks work offline without uploading results. They reflect what this browser exposes; a missing identifier does not establish a device or user's location."],
-  webrtc:["启用 WebRTC 网络检测（会连接 Google 公共 STUN 服务器）","Enable WebRTC network check (contacts Google's public STUN server)"],
-  partial:["未检测项目单独注明，结论按已测分数给出。WebRTC 仅检查地址是否暴露，不判断 IP 属于哪个国家。","Untested checks are marked separately; verdicts use measured scores. WebRTC checks address exposure, not the country of an IP address."],
+  privacyDetail:["结果不上传。WebRTC 默认参与检测，点击开始检测后会连接 Google 公共 STUN。其他项目在当前浏览器中完成。","Results are not uploaded. WebRTC runs by default and contacts Google public STUN when a scan starts. Other checks run in this browser."],
+  webrtc:["WebRTC 网络检测（默认开启；会连接 Google 公共 STUN 服务器）","WebRTC network check (enabled by default; contacts Google public STUN)"],
+  partial:["WebRTC 观察 1 秒，发现候选 IP 加 5 分；未发现按 0 分计算，不表示没有泄露。手动关闭后仅显示部分分数。此项不判断 IP 所属国家。","WebRTC observes for 1 second: an IP candidate adds 5 points, no candidate adds 0 and does not prove no leak. Disabling it gives a partial score. It does not geolocate IPs."],
   rules:["查看评级规则","View scoring rules"],
   ruleDetail:["0–30 分：低风险；31–60 分：中等风险；61–100 分：高风险。分数不是封号概率。语言、字体及 UTC+8 等特征也可能出现在其他地区。","0–30: low risk; 31–60: medium risk; 61–100: high risk. Scores are not ban probabilities. Languages, fonts and UTC+8 can also occur in other regions."],
 };
@@ -62,7 +63,7 @@ function renderMatches(results, missing) {
   for (const hit of hits) {
     const item = document.createElement("li");
     item.className = "signal-chip";
-    item.dataset.level = hit.points / hit.weight >= 0.75 ? "strong" : "partial";
+    item.dataset.level = hit.strength >= 0.6 ? "strong" : "partial";
     item.title = hit.value;
     const name = document.createElement("span"); name.textContent = hit[lang];
     const points = document.createElement("strong"); points.textContent = `+${hit.points}`;
@@ -72,8 +73,8 @@ function renderMatches(results, missing) {
   $("matched-empty").hidden = hits.length > 0;
   $("matched-empty").textContent = missing === 100
     ? (zh ? "尚无有效检测结果，无法列出命中信号。" : "No usable results to list matched signals.")
-    : (zh ? `已测项目没有命中加分信号${missing ? "；仍有项目未检测" : ""}。`
-          : `No measured checks added points${missing ? "; some checks remain untested" : ""}.`);
+    : (zh ? `已测项目没有达到命中阈值的信号${missing ? "；仍有项目未检测" : ""}。`
+          : `No measured checks reached the match threshold${missing ? "; some checks remain untested" : ""}.`);
   $("matched").hidden = false;
 }
 
@@ -95,24 +96,25 @@ async function scan() {
   $("summary-detail").textContent = zh ? "请稍候，结果即将显示。" : "Your results will appear shortly.";
   const results = {};
   try {
+    await new Promise(resolve => setTimeout(resolve, 150));
     for (const [i,check] of checks.entries()) {
       const row = rows.get(check.id);
       row.li.dataset.state = "running";
       row.value.textContent = zh ? "检测中…" : "Checking…";
       row.contribution.textContent = "—";
       $("progress").textContent = `${i + 1} / ${checks.length} · ${check[lang]}`;
-      // Allow progress to paint before synchronous font probing.
-      await new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 30)));
+      await new Promise(resolve => setTimeout(resolve, 460));
       try {
         results[check.id] = await inspect(check.id,lang,$("allow-webrtc").checked);
       } catch {
-        results[check.id] = {strength:null,value:zh ? "未检测 · 浏览器不支持或检查失败" : "Not tested · unsupported or failed"};
+        results[check.id] = {strength:0,failed:true,value:zh ? "检测失败，按兼容规则计 0 分" : "Check failed; compatibility score 0"};
       }
       const found = results[check.id];
       row.value.textContent = found.value;
       const points = typeof found.strength === "number" ? Math.round(found.strength * check.weight) : null;
       row.contribution.textContent = points === null ? "—" : `+${points}`;
-      row.li.dataset.state = points ? "hit" : "done";
+      row.li.dataset.state = found.strength >= 0.25 ? "hit" : "done";
+      await new Promise(resolve => setTimeout(resolve, 150));
     }
     const result = assess(results,lang);
     completed = {result,results};
@@ -153,7 +155,7 @@ function exportImage() {
     const label = `${hit[lang]}  +${hit.points}`;
     const width = c.measureText(label).width + 32;
     if (chipX + width > 1010) {chipX = 70; chipRow++;}
-    const chip = {label, width, x:chipX, row:chipRow, strong:hit.points/hit.weight >= 0.75};
+    const chip = {label, width, x:chipX, row:chipRow, strong:hit.strength >= 0.6};
     chipX += width + 12;
     return chip;
   });
@@ -188,7 +190,7 @@ function exportImage() {
   c.fillText(text("matched"),70,720);
   c.font = "20px sans-serif";
   if (!hits.length) {
-    c.fillText(zh ? "已测项目未发现加分信号；未检测项目见说明。" : "No measured checks added points. See untested checks below.",70,765);
+    c.fillText(zh ? "没有达到命中阈值的信号；全部计分见下方。" : "No measured checks reached the match threshold. See untested checks below.",70,765);
   }
   for (const chip of chips) {
     const y = 742 + chip.row*54;
