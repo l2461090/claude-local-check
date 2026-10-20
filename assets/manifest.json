@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "files": {
+    "app.js": "111c86f2aab5a529db059b8cbe1df42d3e5f10016cd05d5e9f8731a3f2b9f063",
+    "checks.js": "54d3dae524344e990cbf21466d7304a9c8b85a6bdce35f6af60137df193d2090",
+    "icon.svg": "e95e51e64ecc703bab8665de7cd757a3e3335043cfeaaed74e55c82c035c8c9e",
+    "index.html": "9e716a0cd699bffbb1daa3e53c8c222db4ba9793add222ef92fe043387d030db",
+    "model.js": "b921880cd3e34c91a08a93e97076181eabf7d7170623db9e388da8b041a416c0",
+    "style.css": "90afebc03f5e07c3ba284bb4784c5616b62db9ecea31d870a0a763d64f216285",
+    "zh/index.html": "9e716a0cd699bffbb1daa3e53c8c222db4ba9793add222ef92fe043387d030db"
+  }
+}

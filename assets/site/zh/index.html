@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Claude 浏览器环境本地检测，无广告、无统计。">
+  <title>Claude环境检测</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header><div class="header-inner">
+    <a class="brand" href="/zh/"><img src="/icon.svg" width="32" height="32" alt=""><span>Claude环境检测</span></a>
+    <nav aria-label="Language"><a href="/zh/" lang="zh">中文</a><a href="/" lang="en">English</a></nav>
+  </div></header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow" data-text="eyebrow">本地独立版 · 无广告 · 无统计</p>
+      <h1 data-text="heading">看清你的浏览器环境</h1>
+      <p class="lead" data-text="lead">一键检查，直接查看评分、结论与每项检测依据。</p>
+    </section>
+    <section class="report" data-tier="ready" aria-label="Detection result">
+      <div class="assessment" role="status" aria-live="polite" aria-atomic="true">
+        <span class="section-label" data-text="result">环境检测结论</span>
+        <h2 id="summary-title">等待检测</h2>
+        <p id="summary-detail">点击「开始检测」，查看当前浏览器的结果。</p>
+        <p class="note" data-text="disclaimer">浏览器特征的启发式评分，仅供参考，不代表 Claude 官方判断。</p>
+      </div>
+      <div class="score-area">
+        <div class="meter"><div><strong id="score">—</strong><span id="score-unit">/ 100</span></div></div>
+        <span id="rating" class="badge">待检测</span>
+      </div>
+      <div class="actions">
+        <button id="retest" type="button" data-text="start">开始检测</button>
+        <button id="save" type="button" class="secondary" hidden data-text="save">保存结果图片</button>
+        <span id="progress" aria-live="polite" data-text="local">结果留在当前浏览器</span>
+      </div>
+    </section>
+    <section class="checks">
+      <div class="section-head"><h2 data-text="checks">检测明细</h2><span data-text="count">10 项信号 · 总权重 100</span></div>
+      <ol id="check-list"></ol>
+    </section>
+    <section class="privacy">
+      <h2 data-text="privacy">本地检测说明</h2>
+      <p data-text="privacyDetail">默认检测无需联网，结果不上传。检测反映当前浏览器可见的信息；未发现某个标识，不等于能够确定设备或用户所在地。</p>
+      <label><input id="allow-webrtc" type="checkbox"><span data-text="webrtc">启用 WebRTC 网络检测（会连接 Google 公共 STUN 服务器）</span></label>
+      <p data-text="partial">未检测项目单独注明，结论按已测分数给出。WebRTC 仅检查地址是否暴露，不判断 IP 属于哪个国家。</p>
+      <details><summary data-text="rules">查看评级规则</summary><p data-text="ruleDetail">0–30 分：低风险；31–60 分：中等风险；61–100 分：高风险。分数不是封号概率。语言、字体及 UTC+8 等特征也可能出现在其他地区。</p></details>
+    </section>
+  </main>
+</body>
+</html>
